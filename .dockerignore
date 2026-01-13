@@ -1,0 +1,12 @@
+# Git
+.git/
+.gitignore
+
+# Python bytecode cache
+__pycache__/
+
+# Test cache
+.pytest_cache/
+
+# OS files
+.DS_Store
