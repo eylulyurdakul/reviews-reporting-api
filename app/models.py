@@ -18,7 +18,7 @@ class User(Base):
     name: Mapped[str] = mapped_column(String(255))
     # Email is direct PII and would typically be subject to stricter access
     # controls and/or hashing in a production environment.
-    email: Mapped[str] = mapped_column(String(255), index=True)
+    email: Mapped[str] = mapped_column(String(255))
     # Country is quasi-identifying and treated as sensitive in a governance
     # context (e.g. for regional policies).
     country: Mapped[str] = mapped_column(String(128))
@@ -35,7 +35,7 @@ class Business(Base):
     # We use the source system's identifier (Business Id) as the primary key.
     id: Mapped[str] = mapped_column(String(64), primary_key=True)
 
-    name: Mapped[str] = mapped_column(String(255), index=True)
+    name: Mapped[str] = mapped_column(String(255))
 
     reviews: Mapped[list["Review"]] = relationship(
         back_populates="business",
@@ -50,12 +50,12 @@ class Review(Base):
     id: Mapped[str] = mapped_column(String(64), primary_key=True)
 
     title: Mapped[str] = mapped_column(String(255))
-    rating: Mapped[int] = mapped_column(Integer, index=True)
+    rating: Mapped[int] = mapped_column(Integer)
     content: Mapped[str] = mapped_column(Text)
     # IP address is considered PII in many jurisdictions and would normally be
     # masked, anonymised, or heavily access-controlled for compliance.
     ip_address: Mapped[str] = mapped_column(String(64))
-    review_date: Mapped[datetime] = mapped_column(DateTime(timezone=True), index=True)
+    review_date: Mapped[datetime] = mapped_column(DateTime(timezone=True))
 
     user_id: Mapped[str] = mapped_column(ForeignKey("users.id"), index=True)
     business_id: Mapped[str] = mapped_column(ForeignKey("businesses.id"), index=True)
@@ -77,7 +77,7 @@ class IngestionRun(Base):
 
     __tablename__ = "ingestion_runs"
 
-    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
     source_path: Mapped[str] = mapped_column(String(512))
     started_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
@@ -86,7 +86,7 @@ class IngestionRun(Base):
         DateTime(timezone=True),
         nullable=True,
     )
-    status: Mapped[str] = mapped_column(String(32), index=True)
+    status: Mapped[str] = mapped_column(String(32))
     rows_read: Mapped[int] = mapped_column(Integer, default=0)
     rows_inserted: Mapped[int] = mapped_column(Integer, default=0)
     rows_skipped: Mapped[int] = mapped_column(Integer, default=0)

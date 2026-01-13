@@ -169,7 +169,7 @@ This keeps a basic audit trail of ingestions and report usage without adding ext
 - **Bulk upserts**: Use `INSERT ... ON CONFLICT DO UPDATE` instead of row-by-row merge
 - **Streaming ingestion**: Process CSV in chunks instead of loading entire file to memory
 - **Async processing**: Queue large uploads (e.g., Celery + Redis) and process in background
-- **Indexing**: Add indexes on frequently queried columns (already have on `user_id`, `business_id`, `rating`)
+- **Indexing**: Add indexes on frequently queried columns (already have on `user_id`, `business_id`, `ingestion_run_id`)
 
 ### Production deployment notes
 
